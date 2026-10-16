@@ -1,0 +1,272 @@
+{
+  "dataset": "data/phishing_email.csv",
+  "rows": 80779,
+  "class_counts": {
+    "phishing": 42739,
+    "legitimate": 38040
+  },
+  "split": {
+    "train": 56545,
+    "validation": 12117,
+    "test": 12117
+  },
+  "best_c": 10.0,
+  "validation_f1": {
+    "0.1": 0.9774,
+    "0.5": 0.985,
+    "1.0": 0.9877,
+    "2.0": 0.9893,
+    "5.0": 0.9903,
+    "10.0": 0.9913
+  },
+  "test": {
+    "accuracy": 0.9917471321284146,
+    "precision": 0.9912813327105714,
+    "recall": 0.9931367961316487,
+    "f1": 0.9922081969767804,
+    "roc_auc": 0.9995313982063885,
+    "confusion_matrix": [
+      [
+        5650,
+        56
+      ],
+      [
+        44,
+        6367
+      ]
+    ],
+    "report": {
+      "Legitimate": {
+        "precision": 0.9922725676150334,
+        "recall": 0.9901857693655801,
+        "f1-score": 0.9912280701754386,
+        "support": 5706.0
+      },
+      "Phishing": {
+        "precision": 0.9912813327105714,
+        "recall": 0.9931367961316487,
+        "f1-score": 0.9922081969767804,
+        "support": 6411.0
+      },
+      "accuracy": 0.9917471321284146,
+      "macro avg": {
+        "precision": 0.9917769501628024,
+        "recall": 0.9916612827486144,
+        "f1-score": 0.9917181335761095,
+        "support": 12117.0
+      },
+      "weighted avg": {
+        "precision": 0.9917481137920982,
+        "recall": 0.9917471321284146,
+        "f1-score": 0.9917466467969953,
+        "support": 12117.0
+      }
+    }
+  },
+  "top_features": {
+    "phishing": [
+      [
+        "josemonkeyorg",
+        10.0827
+      ],
+      [
+        "http",
+        8.3521
+      ],
+      [
+        "life",
+        7.7993
+      ],
+      [
+        "click",
+        7.7039
+      ],
+      [
+        "remove",
+        7.2532
+      ],
+      [
+        "love",
+        7.2341
+      ],
+      [
+        "numtoken",
+        6.7697
+      ],
+      [
+        "account",
+        6.232
+      ],
+      [
+        "money",
+        5.9216
+      ],
+      [
+        "watches",
+        5.7622
+      ],
+      [
+        "investment",
+        5.7338
+      ],
+      [
+        "men",
+        5.7211
+      ],
+      [
+        "meds",
+        5.6299
+      ],
+      [
+        "bank",
+        5.356
+      ],
+      [
+        "quality",
+        5.2817
+      ],
+      [
+        "monkeyorg",
+        5.2271
+      ],
+      [
+        "com",
+        5.2147
+      ],
+      [
+        "kindly",
+        5.1168
+      ],
+      [
+        "remove subject",
+        5.0306
+      ],
+      [
+        "replica",
+        5.0078
+      ],
+      [
+        "health",
+        4.9774
+      ],
+      [
+        "viagra",
+        4.8494
+      ],
+      [
+        "medications",
+        4.8248
+      ],
+      [
+        "watch",
+        4.7836
+      ],
+      [
+        "reply",
+        4.7456
+      ]
+    ],
+    "legitimate": [
+      [
+        "enron",
+        -19.4233
+      ],
+      [
+        "wrote",
+        -17.4918
+      ],
+      [
+        "thanks",
+        -12.1386
+      ],
+      [
+        "vince",
+        -11.1515
+      ],
+      [
+        "louise",
+        -9.6661
+      ],
+      [
+        "university",
+        -9.4902
+      ],
+      [
+        "opensuse",
+        -9.0183
+      ],
+      [
+        "numtoken opensuse",
+        -7.5205
+      ],
+      [
+        "im",
+        -7.2081
+      ],
+      [
+        "perl",
+        -7.2052
+      ],
+      [
+        "attached",
+        -7.1869
+      ],
+      [
+        "uai",
+        -7.0838
+      ],
+      [
+        "httpxentcommailmanlistinfofork",
+        -6.8996
+      ],
+      [
+        "language",
+        -6.8963
+      ],
+      [
+        "daren",
+        -6.7978
+      ],
+      [
+        "ierant",
+        -6.7601
+      ],
+      [
+        "slideshow",
+        -6.6882
+      ],
+      [
+        "numtoken ierant",
+        -6.6877
+      ],
+      [
+        "fork",
+        -6.6848
+      ],
+      [
+        "numtoken uai",
+        -6.6402
+      ],
+      [
+        "questions",
+        -6.5951
+      ],
+      [
+        "list",
+        -6.5239
+      ],
+      [
+        "enron com",
+        -6.3254
+      ],
+      [
+        "edu",
+        -6.3082
+      ],
+      [
+        "ilug",
+        -6.1665
+      ]
+    ]
+  }
+}

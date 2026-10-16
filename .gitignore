@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+data/*.csv
+data/*.db
+models/*.joblib
+.ipynb_checkpoints/
+docs/
+.streamlit/
