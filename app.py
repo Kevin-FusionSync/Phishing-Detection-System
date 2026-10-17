@@ -77,33 +77,26 @@ def show_result(result):
 
 def analyze_page():
     st.title("🛡️ Phishing Risk Analyzer")
-    st.caption("Paste a suspicious email or link to estimate its phishing risk.")
+    st.caption("Paste a suspicious email to estimate its phishing risk.")
 
     detector = get_detector()
     if not detector.has_model:
         st.warning("No trained model found in models/. Results will use rule-based checks only. "
                    "Run `python -m phishing.train --data data/<dataset>.csv` first.")
 
-    mode = st.radio("What do you want to check?", ["Email", "URL"], horizontal=True)
-
     with st.form("analyze"):
-        if mode == "Email":
-            sender = st.text_input("Sender (optional)", placeholder="PayPal Support <support@paypa1-secure.com>")
-            subject = st.text_input("Subject (optional)")
-            body = st.text_area("Email body", height=250, placeholder="Paste the full email text here. Raw headers and HTML are fine.")
-            url = ""
-        else:
-            sender, subject, body = "", "", ""
-            url = st.text_input("URL", placeholder="http://example.com/login")
+        sender = st.text_input("Sender (optional)", placeholder="PayPal Support <support@paypa1-secure.com>")
+        subject = st.text_input("Subject (optional)")
+        body = st.text_area("Email body", height=250, placeholder="Paste the full email text here. Raw headers and HTML are fine.")
         submitted = st.form_submit_button("Analyze", type="primary")
 
     if not submitted:
         return
-    if not (body.strip() or url.strip() or subject.strip()):
-        st.error("Please enter an email or a URL to analyze.")
+    if not (body.strip() or subject.strip()):
+        st.error("Please enter an email to analyze.")
         return
 
-    result = detector.analyze(text=body, url=url, sender=sender, subject=subject)
+    result = detector.analyze(text=body, sender=sender, subject=subject)
     show_result(result)
 
 

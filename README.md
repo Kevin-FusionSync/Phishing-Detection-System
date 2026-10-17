@@ -1,10 +1,10 @@
 # AI-Based Phishing Detection and Cybersecurity Awareness System
 
-A web-based prototype that analyses a submitted email or URL, estimates its phishing risk and explains the result.
+A web-based prototype that analyses a submitted email, estimates its phishing risk and explains the result.
 
 ## Features
 
-- Streamlit web interface for submitting email text (with optional sender/subject) or a single URL
+- Streamlit web interface for submitting email text (with optional sender/subject)
 - Phishing indicator extraction: suspicious URLs, urgency, sender/domain mismatch, Reply-To mismatch, brand impersonation, look-alike domains, link-text mismatch, risky attachments, requests for sensitive information
 - TF-IDF + Logistic Regression text classifier trained on a labelled public dataset
 - Combined risk score (ML probability + rule score) with Low / Medium / High levels and a written explanation
@@ -17,7 +17,7 @@ A web-based prototype that analyses a submitted email or URL, estimates its phis
 app.py                      Streamlit application
 phishing/
   preprocess.py             dataset loading and text cleaning
-  url_rules.py              URL analysis rules
+  url_rules.py              rules for links found in emails
   indicators.py             email indicator extraction
   scorer.py                 ML + rule risk scoring
   awareness.py              recommended actions and tips
