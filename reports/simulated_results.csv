@@ -6,12 +6,12 @@ P04,phishing,phishing,High,0.953,0.988,0.58,Request for sensitive information; R
 P05,phishing,phishing,High,0.949,0.944,0.664,Asks to enable macros; Risky attachment type; Urgent or threatening language
 P06,phishing,phishing,High,0.993,0.96,0.95,Look-alike brand domain; Look-alike sender domain; Display name impersonates a brand; Request for sensitive information; Urgent or threatening language; Credential-related keywords in link
 P07,phishing,phishing,High,0.729,,0.729,Brand name on unofficial domain; High-risk top-level domain; No HTTPS; Credential-related keywords in link
-P08,phishing,phishing,High,0.993,0.924,0.96,Look-alike sender domain; Brand name on unofficial domain; Display name impersonates a brand; Request for sensitive information; Urgent or threatening language; Reward or money lure; No HTTPS; Hyphen-heavy domain
+P08,phishing,phishing,High,0.993,0.922,0.96,Look-alike sender domain; Brand name on unofficial domain; Display name impersonates a brand; Request for sensitive information; Urgent or threatening language; Reward or money lure; No HTTPS; Hyphen-heavy domain
 L01,legitimate,legitimate,Low,0.0,0.0,0.0,
 L02,legitimate,phishing,Medium,0.526,0.584,0.0,
 L03,legitimate,legitimate,Low,0.033,0.037,0.0,
-L04,legitimate,legitimate,Low,0.182,0.203,0.0,
+L04,legitimate,legitimate,Low,0.182,0.202,0.0,
 L05,legitimate,legitimate,Low,0.0,,0.0,
 L06,legitimate,legitimate,Low,0.013,0.014,0.0,
-L07,legitimate,phishing,Medium,0.616,0.684,0.0,
+L07,legitimate,phishing,Medium,0.615,0.683,0.0,
 L08,legitimate,legitimate,Low,0.002,0.002,0.0,

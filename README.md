@@ -43,6 +43,21 @@ The loader also accepts other common formats, for example the Kaggle "Phishing E
 
 ## Setup
 
+Requires Python 3.11 or newer. The pinned versions in `requirements.txt` were tested with Python 3.13.
+
+macOS / Linux:
+
+```
+python3 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+On macOS the system `python3` may be too old; install a newer one with `brew install python@3.13` and create the venv with `python3.13 -m venv .venv`.
+
+Windows:
+
 ```
 python -m venv .venv
 .venv\Scripts\activate
@@ -57,10 +72,14 @@ python -m phishing.evaluate_samples
 python -m unittest discover -s tests -v
 ```
 
-Use `--sample 20000` with the train command for a faster first run.
+Use `--sample 20000` with the train command for a faster first run. The full dataset takes about 1–2 minutes.
+
+Training creates `models/phishing_model.joblib`. Retrain after changing the scikit-learn version, because saved models are not guaranteed to load across versions. Without a trained model the app still runs, using rule-based checks only.
 
 ## Run the app
 
 ```
 streamlit run app.py
 ```
+
+The app opens at http://localhost:8501. Analysis history is stored in `data/history.db`, which is created automatically.

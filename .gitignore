@@ -8,3 +8,4 @@ models/*.joblib
 .ipynb_checkpoints/
 docs/
 .streamlit/
+.DS_Store
