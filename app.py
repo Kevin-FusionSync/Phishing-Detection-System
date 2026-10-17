@@ -4,9 +4,7 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-from phishing.awareness import GENERAL_TIPS, QUIZ
 from phishing.scorer import HIGH_CUTOFF, LOW_CUTOFF, PhishingDetector
-from phishing.storage import clear_history, load_history, save_result
 
 ROOT = Path(__file__).resolve().parent
 REPORTS = ROOT / "reports"
@@ -106,63 +104,7 @@ def analyze_page():
         return
 
     result = detector.analyze(text=body, url=url, sender=sender, subject=subject)
-    save_result(result, mode, sender=sender, subject=subject, url=url, text=body)
     show_result(result)
-
-
-def history_page():
-    st.title("📜 Analysis History")
-    df = load_history()
-    if df.empty:
-        st.info("No analyses yet.")
-        return
-
-    counts = df["risk_level"].value_counts().reindex(["Low", "Medium", "High"], fill_value=0)
-    c1, c2, c3, c4 = st.columns(4)
-    c1.metric("Total", len(df))
-    c2.metric("Low", int(counts["Low"]))
-    c3.metric("Medium", int(counts["Medium"]))
-    c4.metric("High", int(counts["High"]))
-    st.bar_chart(counts)
-
-    level_filter = st.multiselect("Filter by risk level", ["Low", "Medium", "High"], default=["Low", "Medium", "High"])
-    view = df[df["risk_level"].isin(level_filter)]
-    st.dataframe(view, width="stretch", hide_index=True)
-
-    col_a, col_b = st.columns([1, 1])
-    col_a.download_button("Download CSV", view.to_csv(index=False).encode("utf-8"), "analysis_history.csv", "text/csv")
-    if col_b.button("Clear history"):
-        clear_history()
-        st.rerun()
-
-
-def awareness_page():
-    st.title("🎓 Cybersecurity Awareness")
-    st.write("Most successful attacks start with a convincing message. These habits make phishing much easier to spot.")
-
-    cols = st.columns(2)
-    for i, (title, text) in enumerate(GENERAL_TIPS):
-        with cols[i % 2]:
-            st.markdown(f"#### {title}")
-            st.write(text)
-
-    st.divider()
-    st.subheader("Test yourself")
-    with st.form("quiz"):
-        answers = []
-        for i, q in enumerate(QUIZ):
-            answers.append(st.radio(f"{i + 1}. {q['question']}", q["options"], index=None, key=f"q{i}"))
-        done = st.form_submit_button("Check answers")
-
-    if done:
-        score = 0
-        for q, given in zip(QUIZ, answers):
-            if given == q["answer"]:
-                score += 1
-                st.success(f"✔ {q['question']}\n\n{q['explanation']}")
-            else:
-                st.error(f"✘ {q['question']}\n\nCorrect answer: **{q['answer']}**. {q['explanation']}")
-        st.metric("Your score", f"{score} / {len(QUIZ)}")
 
 
 def performance_page():
@@ -208,21 +150,11 @@ def performance_page():
     t2.write("**Legitimate**")
     t2.dataframe(pd.DataFrame(data["top_features"]["legitimate"], columns=["term", "weight"]), hide_index=True)
 
-    simulated = REPORTS / "simulated_results.csv"
-    if simulated.exists():
-        st.subheader("Simulated test cases")
-        sim = pd.read_csv(simulated)
-        correct = (sim["expected"] == sim["predicted"]).mean()
-        st.metric("Correctly classified", f"{correct:.0%}")
-        st.dataframe(sim, width="stretch", hide_index=True)
-
     st.caption(f"Risk levels: Low < {LOW_CUTOFF:.0%} ≤ Medium < {HIGH_CUTOFF:.0%} ≤ High")
 
 
 PAGES = {
     "Analyze": analyze_page,
-    "History": history_page,
-    "Awareness": awareness_page,
     "Model Performance": performance_page,
 }
 
