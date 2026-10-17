@@ -1,5 +1,6 @@
 import argparse
 import json
+import time
 from pathlib import Path
 
 import joblib
@@ -36,7 +37,6 @@ def make_vectorizer(max_features):
         min_df=2,
         max_df=0.95,
         sublinear_tf=True,
-        stop_words="english",
         max_features=max_features,
     )
 
@@ -105,7 +105,7 @@ def main():
     parser.add_argument("--data", required=True, help="Path to a labelled CSV dataset")
     parser.add_argument("--models-dir", default=str(ROOT / "models"))
     parser.add_argument("--reports-dir", default=str(ROOT / "reports"))
-    parser.add_argument("--max-features", type=int, default=50000)
+    parser.add_argument("--max-features", type=int, default=200000)
     parser.add_argument("--sample", type=int, default=0, help="Use a random subset of N rows for quick experiments")
     parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()
@@ -137,9 +137,16 @@ def main():
     model.fit(train_full["clean"], train_full["label"])
 
     metrics = evaluate(model, test)
+    train_acc = accuracy_score(train_full["label"], model.predict(train_full["clean"]))
+    start = time.perf_counter()
+    model.predict_proba(test["clean"])
+    ms_per_email = (time.perf_counter() - start) * 1000 / len(test)
     print(f"Test accuracy={metrics['accuracy']:.4f} precision={metrics['precision']:.4f} "
           f"recall={metrics['recall']:.4f} f1={metrics['f1']:.4f} roc_auc={metrics['roc_auc']:.4f}")
     print("Confusion matrix [[TN, FP], [FN, TP]]:", metrics["confusion_matrix"])
+    print(f"Fit check: train accuracy={train_acc:.4f} test accuracy={metrics['accuracy']:.4f} "
+          f"gap={train_acc - metrics['accuracy']:.4f}")
+    print(f"Prediction speed: {ms_per_email:.3f} ms per email")
 
     joblib.dump(model, models_dir / "phishing_model.joblib")
     save_confusion_matrix(metrics["confusion_matrix"], reports_dir / "confusion_matrix.png")
@@ -151,6 +158,8 @@ def main():
         "split": {"train": len(train), "validation": len(val), "test": len(test)},
         "best_c": best_c,
         "validation_f1": {str(k): round(v, 4) for k, v in val_scores.items()},
+        "train_accuracy": train_acc,
+        "ms_per_email": round(ms_per_email, 4),
         "test": metrics,
         "top_features": top_features(model),
     }
